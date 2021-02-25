@@ -22,6 +22,7 @@ import {
   fullScreenStyle,
   verticalStackStyle
 } from './styles/Configuration.styles';
+import { utils } from 'Utils/Utils';
 
 export interface ConfigurationScreenProps {
   userId: string;
@@ -51,9 +52,9 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   const spinnerLabel = 'Initializing call client...';
   const buttonText = 'Start call';
 
-  const createUserId = () => 'user' + Math.ceil(Math.random() * 1000);
+  // const createUserId = () => 'user' + Math.ceil(Math.random() * 1000);
 
-  const [name, setName] = useState(createUserId());
+  const [name, setName] = useState("");
   const [emptyWarning, setEmptyWarning] = useState(false);
 
   const {groupId, setDisplayName, initCallClient, setGroup, unsupportedStateHandler, endCallHandler} = props;
@@ -61,6 +62,10 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   useEffect(() => {
     initCallClient(unsupportedStateHandler, endCallHandler);
     setGroup(groupId);
+    (async function() {
+      const user = await utils.getUser();
+      setName(user.clientPrincipal.userDetails);
+    }());
   }, []);
 
   return (

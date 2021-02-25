@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Calling
 {
-    [Route("/userToken")]
+    [Route("/api/userToken")]
     public class UserTokenController : Controller
     {
         private readonly CommunicationIdentityClient _client;

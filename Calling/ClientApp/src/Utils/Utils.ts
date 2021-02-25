@@ -16,11 +16,18 @@ export const utils = {
     return window.location.origin;
   },
   getTokenForUser: async (): Promise<any> => {
-    const response = await fetch('/userToken');
+    const response = await fetch('/api/userToken');
     if (response.ok) {
       return response.json();
     }
     throw new Error('Invalid token response');
+  },
+  getUser: async (): Promise<any> => {
+    const response = await fetch('/.auth/me');
+    if (response.ok) {
+      return await response.json();
+    }
+    throw new Error('Invalid user');
   },
   isSelectedAudioDeviceInList(selected: AudioDeviceInfo, list: AudioDeviceInfo[]): boolean {
     return list.filter((item) => item.name === selected.name).length > 0;
